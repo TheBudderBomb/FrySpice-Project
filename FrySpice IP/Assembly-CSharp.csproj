@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Fall_Kill.cs" />
+     <Compile Include="Assets\Scripts\Panoramic_Camera.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/Thad/Desktop/FrySpice-Project/FrySpice IP/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
