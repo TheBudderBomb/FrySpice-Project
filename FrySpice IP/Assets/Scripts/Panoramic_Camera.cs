@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class Panoramic_Camera : MonoBehaviour
 {
-    //init of player
-    public GameObject player;
+    /// <summary>
+    /// Author: William T. Fry
+    /// Created: 02/19/2020
+    /// A script used for allowing the camera to follow the player associated with it.
+    /// <params>A player object and Camera distance.</params>
+    /// </summary>
+    public Transform player;
+    public float cam_dist = 30.0f;
 
-    // Update is called once per frame
-    void Update()
+    //funct runs before the game even starts
+    void Awake()
     {
-        if (player)
-        {
-            if (player.transform.position.x > -1)
-            {
-                if(player.transform.position.y > -1)
-                {
-                    transform.position = transform.position.y;
-                }
+        //Accounts for camera size/screen height
+        GetComponent<UnityEngine.Camera>().orthographicSize = ((Screen.height / 2) / cam_dist);
+    }
 
-                transform.position = transform.position.x;
-
-            }
-        }
+    void FixedUpdate()
+    {
+        //Updates the camera's position
+        transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
     }
 }

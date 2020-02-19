@@ -3,23 +3,35 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-	//This will be our maximum speed as we will always be multiplying by 1
+	/// <summary>
+    /// Author: William T. Fry
+    /// Created: 02/19/2020
+    /// A script used to allow keybopard contol of the player's position
+    /// </summary>
+    
+
+	//value denoting maximum speed, always * 1
 	public float maxSpeed = 2f;
-	//a boolean value to represent whether we are facing left or not
+	
+	//truth value denoting direction of player
 	bool facingLeft = true;
-	//a value to represent our Animator
+
+	//animator value, will be mainly used later, come back to fix comments when animation implemented
 	Animator anim;
-	//to check ground and to have a jumpforce we can change in the editor
+
+	//truth value checking for the presence of ground, math
 	bool grounded = false;
 	public Transform groundCheck;
 	float groundRadius = 0.2f;
 	public LayerMask whatIsGround;
+
+	//The force by which the player will jump.
 	public float jumpForce = 700f;
 
-	// Use this for initialization
+	//init
 	void Start()
 	{
-		//set anim to our animator
+		//set anim to the animator
 		anim = GetComponent<Animator>();
 
 	}
@@ -27,34 +39,37 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		//set our vSpeed
+		//set vSpeed
 		anim.SetFloat("vSpeed", GetComponent<Rigidbody2D>().velocity.y);
-		//set our grounded bool
+
+		//set grounded boolean
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-		//set ground in our Animator to match grounded
+
+		//set ground bool in anim to animate grounding
 		anim.SetBool("Ground", grounded);
 
-
-		float move = Input.GetAxis("Horizontal");//Gives us of one if we are moving via the arrow keys
-												 //move our Players rigidbody
+		//moving value for arrow keys/wasd input
+		float move = Input.GetAxis("Horizontal");
+												 
+		//move the rigidbody component on player 
 		GetComponent<Rigidbody2D>().velocity = new Vector3(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
-		//set our speed
+
+		//set movement speed
 		anim.SetFloat("Speed", Mathf.Abs(move));
-		//if we are moving left but not facing left flip, and vice versa
+
+		//calls Flip method to make it so when moving left/right the player faces the right direction.
 		if (move < 0 && !facingLeft)
 		{
-
 			Flip();
-		}
-		else if (move > 0 && facingLeft)
-		{
+		} else if (move > 0 && facingLeft) {
 			Flip();
 		}
 	}
 
 	void Update()
 	{
-		//if we are on the ground and the space bar was pressed, change our ground state and add an upward force
+
+		//if grounded and spacebar input detected, no longer grounded & the jumpforce gets added
 		if (grounded && Input.GetKeyDown(KeyCode.Space))
 		{
 			anim.SetBool("Ground", false);
@@ -64,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	//flip if needed
+	//method for flipping the player sprite along the y axis.
 	void Flip()
 	{
 		facingLeft = !facingLeft;

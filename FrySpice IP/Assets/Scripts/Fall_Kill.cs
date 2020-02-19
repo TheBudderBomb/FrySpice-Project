@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Fall_Kill : MonoBehaviour
 {
+    /// <summary>
+    /// Author: William T. Fry
+    /// Created: 02/19/2020
+    /// A script that powers the 'destroyers' or the points by which the player will lose a life.
+    /// </summary>
+
+
     // Start is called before the first frame update
     void Start()
     {
