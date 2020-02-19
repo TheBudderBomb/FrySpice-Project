@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
 	/// <summary>
-    /// Author: William T. Fry
-    /// Created: 02/19/2020
-    /// A script used to allow keybopard contol of the player's position
-    /// </summary>
-    
+	/// Author: William T. Fry
+	/// Created: 02/19/2020
+	/// A script used to allow keyboard contol of the player's position, jumping, and pickups.
+	/// </summary>
+
+
+	//Values for the text representation of coin total and the count, respectively.
+	public Text score;
+	private int coins;
 
 	//value denoting maximum speed, always * 1
 	public float maxSpeed = 2f;
@@ -28,11 +33,17 @@ public class PlayerController : MonoBehaviour
 	//The force by which the player will jump.
 	public float jumpForce = 700f;
 
+	//sound variables
+	public AudioSource JumpSound;
+	public AudioSource CoinCollect;
+	
 	//init
 	void Start()
 	{
 		//set anim to the animator
 		anim = GetComponent<Animator>();
+		coins = 0;
+		CoinBlooper();
 
 	}
 
@@ -74,7 +85,7 @@ public class PlayerController : MonoBehaviour
 		{
 			anim.SetBool("Ground", false);
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
-			GetComponent<AudioSource>().Play();
+			JumpSound.Play();
 		}
 
 
@@ -88,4 +99,21 @@ public class PlayerController : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+
+	void OnTriggerEnter2D(Collider2D other)
+    {
+		if (other.gameObject.CompareTag("Coin"))
+        {
+			Debug.Log("Got here");
+			other.gameObject.SetActive(false);
+			coins += 1;
+			CoinCollect.Play();
+			CoinBlooper();
+        }
+    }
+
+	void CoinBlooper()
+    {
+		score.text = "Coins: " + coins.ToString();
+    }
 }
