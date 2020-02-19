@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 		{
 			anim.SetBool("Ground", false);
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
+			GetComponent<AudioSource>().Play();
 		}
 
 
