@@ -104,7 +104,6 @@ public class PlayerController : MonoBehaviour
     {
 		if (other.gameObject.CompareTag("Coin"))
         {
-			Debug.Log("Got here");
 			other.gameObject.SetActive(false);
 			coins += 1;
 			CoinCollect.Play();
