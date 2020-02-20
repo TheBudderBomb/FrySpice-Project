@@ -7,11 +7,13 @@ public class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Author: William T. Fry
 	/// Created: 02/19/2020
-	/// A script used to allow keyboard contol of the player's position, jumping, and pickups.
+	/// Desc: A script used to allow keyboard contol of the 
+    /// player's position, jumping, and pickups.
 	/// </summary>
 
 
-	//Values for the text representation of coin total and the count, respectively.
+	//Values for the text representation of coin total and the 
+	//count, respectively.
 	public Text score;
 	private int coins;
 
@@ -21,7 +23,8 @@ public class PlayerController : MonoBehaviour
 	//truth value denoting direction of player
 	bool facingLeft = true;
 
-	//animator value, will be mainly used later, come back to fix comments when animation implemented
+	//animator value, will be mainly used later, come back to fix
+	//comments when animation implemented
 	Animator anim;
 
 	//truth value checking for the presence of ground, math
@@ -36,8 +39,11 @@ public class PlayerController : MonoBehaviour
 	//sound variables
 	public AudioSource JumpSound;
 	public AudioSource CoinCollect;
-	
-	//init
+
+	/// <summary>
+	/// Method called on the frame when a script is enabled just before
+    /// any of the Update methods are called the first time.
+	/// </summary>
 	void Start()
 	{
 		//set anim to the animator
@@ -47,7 +53,11 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-
+	/// <summary>
+	/// Basically Frame-rate independent message for physics calculations, 
+    /// has the frequency of the physics system; it is called every fixed 
+    /// frame-rate frame. 
+	/// </summary>
 	void FixedUpdate()
 	{
 		//set vSpeed
@@ -68,7 +78,8 @@ public class PlayerController : MonoBehaviour
 		//set movement speed
 		anim.SetFloat("Speed", Mathf.Abs(move));
 
-		//calls Flip method to make it so when moving left/right the player faces the right direction.
+		//calls Flip method to make it so when moving left/right the
+		//player faces the right direction.
 		if (move < 0 && !facingLeft)
 		{
 			Flip();
@@ -77,10 +88,14 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+    /// Method called every frame.
+    /// </summary>
 	void Update()
 	{
 
-		//if grounded and spacebar input detected, no longer grounded & the jumpforce gets added
+		//if grounded and spacebar input detected, no longer grounded
+		//& the jumpforce gets added
 		if (grounded && Input.GetKeyDown(KeyCode.Space))
 		{
 			anim.SetBool("Ground", false);
@@ -91,7 +106,9 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	//method for flipping the player sprite along the y axis.
+	/// <summary>
+    /// Causes the related object to flip along the y-axis.
+    /// </summary>
 	void Flip()
 	{
 		facingLeft = !facingLeft;
@@ -100,6 +117,11 @@ public class PlayerController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
+	/// <summary>
+	/// This method is called whenever another object enters a trigger collider
+    /// attached to the defined object.
+	/// </summary>
+	/// <param name="other"></param>
 	void OnTriggerEnter2D(Collider2D other)
     {
 		if (other.gameObject.CompareTag("Coin"))
@@ -111,6 +133,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	/// <summary>
+    /// Method by which changes the coin score string.
+    /// </summary>
 	void CoinBlooper()
     {
 		score.text = "Coins: " + coins.ToString();
