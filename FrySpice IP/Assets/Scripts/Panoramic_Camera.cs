@@ -13,13 +13,21 @@ public class Panoramic_Camera : MonoBehaviour
     public Transform player;
     public float cam_dist = 30.0f;
 
-    //funct runs before the game even starts
+    /// <summary>
+    /// Method called when the script instance is being loaded, initializing the camera
+    /// component and its size value
+    /// </summary>
     void Awake()
     {
         //Accounts for camera size/screen height
         GetComponent<UnityEngine.Camera>().orthographicSize = ((Screen.height / 2) / cam_dist);
     }
 
+    /// <summary>
+    /// Basically Frame-rate independent message for physics calculations, 
+    /// has the frequency of the physics system; it is called every fixed 
+    /// frame-rate frame.
+    /// </summary>
     void FixedUpdate()
     {
         //Updates the camera's position

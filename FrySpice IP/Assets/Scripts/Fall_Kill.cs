@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fall_Kill : MonoBehaviour
 {
@@ -10,27 +11,43 @@ public class Fall_Kill : MonoBehaviour
     /// A script that powers the 'destroyers' or the points by which the player will lose a life.
     /// </summary>
 
+    public static int lives;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Method called on the frame when a script is enabled just before
+    /// any of the Update methods are called the first time.
+    /// </summary>
     void Start()
     {
-        
+        lives = PlayerPrefs.GetInt("lives");
     }
 
-    //Trigger method, tells the game when something crosses the line of the destroyer.
+    /// <summary>
+    /// Trigger method, tells the game when something crosses the line of the destroyer.
+    /// </summary>
     void OnTriggerEnter2D(Collider2D other)
     {
         //If the trigger happens to be tagged as a 'Player', does this.
         if (other.tag == "Player")
         {
-            Debug.Break();
-            return;
+            lives--;
+            if (lives < 0)
+            {
+                PlayerPrefs.DeleteAll();
+                SceneManager.LoadScene(1);
+            } else
+            {
+                SceneManager.LoadScene(0);
+                PlayerPrefs.SetInt("lives", lives);
+            }
+
         }
 
         if (other.gameObject.transform.parent)
         {
             Destroy(other.gameObject.transform.parent.gameObject);
-        } else {
+        } 
+        else {
             Destroy(other.gameObject);
         }
     }

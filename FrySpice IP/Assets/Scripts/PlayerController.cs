@@ -8,14 +8,18 @@ public class PlayerController : MonoBehaviour
 	/// Author: William T. Fry
 	/// Created: 02/19/2020
 	/// Desc: A script used to allow keyboard contol of the 
-    /// player's position, jumping, and pickups.
+	/// player's position, jumping, and pickups.
 	/// </summary>
 
+	//Initial and current life values
+	private static int Initial_Lives = 3;
+	private static int Current_Lives;
+	public Text lives;
 
 	//Values for the text representation of coin total and the 
 	//count, respectively.
 	public Text score;
-	private int coins;
+	private int coins = 0;
 
 	//value denoting maximum speed, always * 1
 	public float maxSpeed = 2f;
@@ -48,8 +52,10 @@ public class PlayerController : MonoBehaviour
 	{
 		//set anim to the animator
 		anim = GetComponent<Animator>();
-		coins = 0;
-		CoinBlooper();
+
+		coins = PlayerPrefs.GetInt("coins", coins);
+		Current_Lives = PlayerPrefs.GetInt("lives", Initial_Lives);
+		Score_Update();
 
 	}
 
@@ -103,7 +109,6 @@ public class PlayerController : MonoBehaviour
 			JumpSound.Play();
 		}
 
-
 	}
 
 	/// <summary>
@@ -128,16 +133,20 @@ public class PlayerController : MonoBehaviour
         {
 			other.gameObject.SetActive(false);
 			coins += 1;
+
+			//send new val to playerprefs
+			PlayerPrefs.SetInt("coins", coins);
 			CoinCollect.Play();
-			CoinBlooper();
+			Score_Update();
         }
     }
 
 	/// <summary>
-    /// Method by which changes the coin score string.
+    /// Method by which updates score strings.
     /// </summary>
-	void CoinBlooper()
+	void Score_Update()
     {
+		lives.text = "Lives: " + Current_Lives.ToString();
 		score.text = "Coins: " + coins.ToString();
-    }
+	}
 }
