@@ -8,7 +8,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerPrefs.DeleteAll();
     }
 
     /// <summary>
@@ -19,6 +19,7 @@ public class GameOver : MonoBehaviour
     {
         if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 + 150, 100, 40), "Play Again?"))
         {
+
             SceneManager.LoadScene(0);
         }
 

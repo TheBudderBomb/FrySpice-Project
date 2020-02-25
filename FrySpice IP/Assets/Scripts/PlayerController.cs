@@ -52,9 +52,8 @@ public class PlayerController : MonoBehaviour
 	{
 		//set anim to the animator
 		anim = GetComponent<Animator>();
-
 		coins = PlayerPrefs.GetInt("coins", coins);
-		Current_Lives = PlayerPrefs.GetInt("lives", Initial_Lives);
+		Current_Lives = PlayerPrefs.GetInt("lives");
 		Score_Update();
 
 	}
@@ -108,6 +107,8 @@ public class PlayerController : MonoBehaviour
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
 			JumpSound.Play();
 		}
+
+		PlayerPrefs.SetInt("lives", Current_Lives);
 
 	}
 

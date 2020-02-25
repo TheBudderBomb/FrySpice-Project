@@ -27,17 +27,17 @@ public class Fall_Kill : MonoBehaviour
     /// </summary>
     void OnTriggerEnter2D(Collider2D other)
     {
-        //If the trigger happens to be tagged as a 'Player', does this.
-        if (other.tag == "Player")
+        //If the collision happens to be tagged as a 'Player', does this.
+        if (other.gameObject.tag == "Player")
         {
+            Debug.Log("Collision enter!!" + lives);
             lives--;
             if (lives < 0)
             {
-                PlayerPrefs.DeleteAll();
                 SceneManager.LoadScene(1);
             } else
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 PlayerPrefs.SetInt("lives", lives);
             }
 
