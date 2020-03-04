@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Fall_Kill.cs" />
      <Compile Include="Assets\Scripts\GameOver.cs" />
+     <Compile Include="Assets\Scripts\Lives.cs" />
      <Compile Include="Assets\Scripts\Panoramic_Camera.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Portal.cs" />

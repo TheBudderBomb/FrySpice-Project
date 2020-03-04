@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,11 +11,6 @@ public class PlayerController : MonoBehaviour
 	/// Desc: A script used to allow keyboard contol of the 
 	/// player's position, jumping, and pickups.
 	/// </summary>
-
-	//Initial and current life values
-	private static int Initial_Lives = 3;
-	private static int Current_Lives;
-	public Text lives;
 
 	//Values for the text representation of coin total and the 
 	//count, respectively.
@@ -52,8 +48,8 @@ public class PlayerController : MonoBehaviour
 	{
 		//set anim to the animator
 		anim = GetComponent<Animator>();
+		
 		coins = PlayerPrefs.GetInt("coins", coins);
-		Current_Lives = PlayerPrefs.GetInt("lives");
 		Score_Update();
 
 	}
@@ -108,8 +104,6 @@ public class PlayerController : MonoBehaviour
 			JumpSound.Play();
 		}
 
-		PlayerPrefs.SetInt("lives", Current_Lives);
-
 	}
 
 	/// <summary>
@@ -147,7 +141,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
 	void Score_Update()
     {
-		lives.text = "Lives: " + Current_Lives.ToString();
 		score.text = "Coins: " + coins.ToString();
 	}
 }

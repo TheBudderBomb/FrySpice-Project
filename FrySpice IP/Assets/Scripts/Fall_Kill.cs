@@ -11,15 +11,13 @@ public class Fall_Kill : MonoBehaviour
     /// A script that powers the 'destroyers' or the points by which the player will lose a life.
     /// </summary>
 
-    public static int lives;
+    Lives lives;
+    GameObject player;
 
-    /// <summary>
-    /// Method called on the frame when a script is enabled just before
-    /// any of the Update methods are called the first time.
-    /// </summary>
-    void Start()
+    void Awake()
     {
-        lives = PlayerPrefs.GetInt("lives");
+        player = GameObject.FindGameObjectWithTag("Player");
+        lives = player.GetComponent<Lives>();
     }
 
     /// <summary>
@@ -30,25 +28,18 @@ public class Fall_Kill : MonoBehaviour
         //If the collision happens to be tagged as a 'Player', does this.
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Collision enter!!" + lives);
-            lives--;
-            if (lives < 0)
+            if(lives.lives >= 0)
             {
-                SceneManager.LoadScene(1);
-            } else
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                PlayerPrefs.SetInt("lives", lives);
+                lives.Damage();
             }
-
         }
-
+        /*
         if (other.gameObject.transform.parent)
         {
             Destroy(other.gameObject.transform.parent.gameObject);
         } 
         else {
             Destroy(other.gameObject);
-        }
+        }*/
     }
 }
