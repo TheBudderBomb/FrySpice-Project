@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
 	public AudioSource JumpSound;
 	public AudioSource CoinCollect;
 
+	Lives lives;
+	GameObject player;
+
+	bool one_smack;
+
 	/// <summary>
 	/// Method called on the frame when a script is enabled just before
     /// any of the Update methods are called the first time.
@@ -48,7 +53,10 @@ public class PlayerController : MonoBehaviour
 	{
 		//set anim to the animator
 		anim = GetComponent<Animator>();
-		
+
+		player = GameObject.FindGameObjectWithTag("Player");
+		lives = player.GetComponent<Lives>();
+
 		coins = PlayerPrefs.GetInt("coins", coins);
 		Score_Update();
 
@@ -134,6 +142,24 @@ public class PlayerController : MonoBehaviour
 			CoinCollect.Play();
 			Score_Update();
         }
+
+		if (one_smack == false)
+        {
+			if (other.gameObject.CompareTag("FallKill"))
+			{
+				one_smack = true;
+				if (lives.lives >= 0)
+				{
+					lives.Damage();
+				}
+			}
+		}
+		
+    }
+
+	public void Vulnerability()
+    {
+		one_smack = false;
     }
 
 	/// <summary>
