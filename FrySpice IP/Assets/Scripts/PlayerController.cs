@@ -154,6 +154,11 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 		}
+
+		if (other.gameObject.CompareTag("Goal"))
+        {
+			SceneManager.LoadScene(2);
+        }
 		
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - FallKill
+  - Goal
   layers:
   - Default
   - TransparentFX
